@@ -57,6 +57,17 @@ class Gladiator
         $this->health = $health;
     }
 
+    /**
+     * Vzhledem k tomu, že krom násobení attackDamage jsou obě klausule if/else stejné, pojďme kód rafaktorovat
+     * využitím proměnné $multiplier.
+     *
+     * Po implementaci si všimneš, že v if/else jen definuješ hodnotu proměnné $multiplier,
+     * můžeš proto zápis zkrátit přes ternární operátor.
+     *
+     * Also: random výběr jednoho čísla z 10ti (0 - 9) je taky pravěpodobnost 10%.
+     * Využij tohoto a faktu že 0 = false a jakékoli jiné číslo = true v ternárním operátoru a
+     * měl bys dostat popiči elegantní řádek
+     */
     public function attack(Gladiator $warrior2): int
     {
         $randomNumber = rand(0, 100);
