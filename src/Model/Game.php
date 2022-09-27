@@ -22,7 +22,7 @@ class Game
     public function run(): void
     {
         /**
-         * Nepotřebujeme proměnou $starting, když změníme rand z 0-1 místo 1-2 a vložíme rovnou do ifu
+         * Nepotřebujeme proměnou $starting, když změníme rand na 0-1 místo 1-2 a vložíme rovnou do ifu
          * Taky nepotřebujeme else, když bude
          * $warrior1 = $this->warrior1 a $warrior2 = $this->warrior2; jako defaultní stav
          **/
