@@ -39,11 +39,17 @@ final class RunGameCommand extends Command
         $choise = $helper->ask($input, $output, $question);
         $output->writeln('You have selected: '.$choise);
 
+        /**
+         * Na tohle celé vytvoř funkci, ať to nevypadá tak špagetově... jako parametr bude jen jeden warrior.
+         * Takhle ti to dovolí nasetovat oba warriory zvlášť
+         **/
         if ($choise == 1) {
 
+            // Nemusí být setováno 3x (řádky: 66, 82)
             $helper = $this->getHelper('question');
             $questionHealth = new Question('Please input how much health should the Gladiators have = ');
 
+            // tu validator funkci používáš 3x... funkci si můžeš uložit do proměnné a přepsat message na něco obecného jako "Value should be an integer"
             $questionHealth->setValidator(function ($answer) {
                 if (!is_numeric($answer)) {
                     throw new RuntimeException('Health should be an integer.');
@@ -53,6 +59,7 @@ final class RunGameCommand extends Command
 
             $healthPoints = (int)$helper->ask($input, $output, $questionHealth);
 
+            // setHealth nic nevrací
             $resultHealth = $warrior1->setHealth($healthPoints);
             $resultHealth = $warrior2->setHealth($healthPoints);
 
@@ -68,6 +75,7 @@ final class RunGameCommand extends Command
 
             $attackDamage = (int)$helper->ask($input, $output, $questionAttackDamage);
 
+            // nic nevrací
             $resultAttackDamage = $warrior1->setAttackDamage($attackDamage);
             $resultAttackDamage = $warrior2->setAttackDamage($attackDamage);
 
@@ -83,6 +91,7 @@ final class RunGameCommand extends Command
 
             $armor = (int)$helper->ask($input, $output, $questionArmor);
 
+            // nic nevrací
             $resultArmor = $warrior1->setArmor($armor);
             $resultArmor = $warrior2->setArmor($armor);
         }
