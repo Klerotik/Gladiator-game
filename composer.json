@@ -6,7 +6,8 @@
     "symfony/runtime": "^6.1",
     "symfony/orm-pack": "^2.2",
     "doctrine/migrations": "^3.5",
-    "symfony/http-kernel": "^6.1"
+    "symfony/http-kernel": "^6.1",
+    "ext-http": "*"
   },
   "autoload": {
     "psr-4": {

@@ -23,8 +23,8 @@ final class RunGameCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
-        $warrior1 = new Gladiator("Matty", 20, 5, 100);
-        $warrior2 = new Gladiator("Grabby", 15, 10, 100);
+        $warrior1 = new Gladiator("Matty", 20, 10, 100);
+        $warrior2 = new Gladiator("Grabby", 20, 10, 100);
 
 
         $output->writeln("Welcome to Matty vs. Grabby!");
@@ -39,61 +39,47 @@ final class RunGameCommand extends Command
         $choise = $helper->ask($input, $output, $question);
         $output->writeln('You have selected: '.$choise);
 
-        /**
+         /**
          * Na tohle celé vytvoř funkci, ať to nevypadá tak špagetově... jako parametr bude jen jeden warrior.
          * Takhle ti to dovolí nasetovat oba warriory zvlášť
          **/
-        if ($choise == 1) {
 
-            // Nemusí být setováno 3x (řádky: 66, 82)
+            if ($choise == 1) {
+
             $helper = $this->getHelper('question');
             $questionHealth = new Question('Please input how much health should the Gladiators have = ');
 
-            // tu validator funkci používáš 3x... funkci si můžeš uložit do proměnné a přepsat message na něco obecného jako "Value should be an integer"
-            $questionHealth->setValidator(function ($answer) {
+            $attributeQuestion = function ($answer) {
                 if (!is_numeric($answer)) {
-                    throw new RuntimeException('Health should be an integer.');
+                    throw new \RuntimeException('Value should be an integer.');
                 }
                 return $answer;
-            });
+            };
+
+
+            // tu validator funkci používáš 3x... funkci si můžeš uložit do proměnné a přepsat message na něco obecného jako "Value should be an integer" OK
+            $questionHealth->setValidator($attributeQuestion);
 
             $healthPoints = (int)$helper->ask($input, $output, $questionHealth);
+            $warrior1->setHealth($healthPoints);
+            $warrior2->setHealth($healthPoints);
 
-            // setHealth nic nevrací
-            $resultHealth = $warrior1->setHealth($healthPoints);
-            $resultHealth = $warrior2->setHealth($healthPoints);
-
-            $helper = $this->getHelper('question');
             $questionAttackDamage = new Question('Please input how much attack damage should the Gladiators have = ');
 
-            $questionAttackDamage->setValidator(function ($answer) {
-                if (!is_numeric($answer)) {
-                    throw new RuntimeException('Attack damage should be an integer.');
-                }
-                return $answer;
-            });
+            $questionAttackDamage->setValidator($attributeQuestion);
 
             $attackDamage = (int)$helper->ask($input, $output, $questionAttackDamage);
+            $warrior1->setAttackDamage($attackDamage);
+            $warrior2->setAttackDamage($attackDamage);
 
-            // nic nevrací
-            $resultAttackDamage = $warrior1->setAttackDamage($attackDamage);
-            $resultAttackDamage = $warrior2->setAttackDamage($attackDamage);
-
-            $helper = $this->getHelper('question');
             $questionArmor = new Question('Please input how much armor should the Gladiators have = ');
 
-            $questionArmor->setValidator(function ($answer) {
-                if (!is_numeric($answer)) {
-                    throw new RuntimeException('Armor should be an integer.');
-                }
-                return $answer;
-            });
+            $questionArmor->setValidator($attributeQuestion);
 
             $armor = (int)$helper->ask($input, $output, $questionArmor);
+            $warrior1->setArmor($armor);
+            $warrior2->setArmor($armor);
 
-            // nic nevrací
-            $resultArmor = $warrior1->setArmor($armor);
-            $resultArmor = $warrior2->setArmor($armor);
         }
 
         $game = new Game($warrior1, $warrior2, 10, $output);

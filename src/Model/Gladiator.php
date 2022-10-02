@@ -66,20 +66,17 @@ class Gladiator
      *
      * Also: random výběr jednoho čísla z 10ti (0 - 9) je taky pravěpodobnost 10%.
      * Využij tohoto a faktu že 0 = false a jakékoli jiné číslo = true v ternárním operátoru a
-     * měl bys dostat popiči elegantní řádek
+     * měl bys dostat popiči elegantní
+     *
+     * Ternární operátor = (Condition) ? (Statement1) : (Statement2);
+     * OK
      */
     public function attack(Gladiator $warrior2): int
     {
-        $randomNumber = rand(0, 100);
+        $multiplier = 2;
 
-        if ($randomNumber <= 10) {
-            $dmg = ((2 * $this->getAttackDamage()) - $warrior2->getArmor());
-            $warrior2->setHealth($warrior2->getHealth() - $dmg);
-        } else {
-            $dmg = ($this->getAttackDamage() - $warrior2->getArmor());
-            $warrior2->setHealth($warrior2->getHealth() - $dmg);
-        }
-
+        $dmg = rand(0,9) ? ($this->getAttackDamage() - $warrior2->getArmor()) : ($multiplier * $this->getAttackDamage() - $warrior2->getArmor());
+        $warrior2->setHealth($warrior2->getHealth() - $dmg);
 
         return $dmg;
     }
